@@ -1,0 +1,18 @@
+current directory: /home/yama/hackit/2026cirkit-a/vendor/bundle/ruby/3.2.0/gems/racc-1.8.1/ext/racc/cparse
+/home/yama/.rbenv/versions/3.2.2/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /home/yama/hackit/2026cirkit-a/vendor/bundle/ruby/3.2.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20260801-8726-u9dfgw sitelibdir\=./.gem.20260801-8726-u9dfgw clean
+
+current directory: /home/yama/hackit/2026cirkit-a/vendor/bundle/ruby/3.2.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20260801-8726-u9dfgw sitelibdir\=./.gem.20260801-8726-u9dfgw
+compiling cparse.c
+linking shared-object racc/cparse.so
+
+current directory: /home/yama/hackit/2026cirkit-a/vendor/bundle/ruby/3.2.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20260801-8726-u9dfgw sitelibdir\=./.gem.20260801-8726-u9dfgw install
+/usr/bin/install -c -m 0755 cparse.so ./.gem.20260801-8726-u9dfgw/racc
+
+current directory: /home/yama/hackit/2026cirkit-a/vendor/bundle/ruby/3.2.0/gems/racc-1.8.1/ext/racc/cparse
+make DESTDIR\= sitearchdir\=./.gem.20260801-8726-u9dfgw sitelibdir\=./.gem.20260801-8726-u9dfgw clean
