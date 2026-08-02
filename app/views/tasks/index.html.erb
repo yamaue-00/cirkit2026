@@ -178,7 +178,30 @@
         flex-direction: column;
         align-items: flex-end;
         gap: 8px;
-}
+    }
+
+    .card-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .edit-link {
+        color: blue;
+        font-weight: bold;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .card-actions button,
+    .card-actions .edit-link {
+        border: none;
+        background: none;
+        color: blue;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 14px;
+    }
   </style>
 </head>
 
@@ -214,22 +237,25 @@
             <div class="assignment-list" id="list">
                 <% @tasks.each do |task| %>
                     <%
-                    if task.deadline == Date.today
+                    if task.deadline == Time.zone.today
                         status_class = "due-today"
-                    elsif task.deadline == Date.tomorrow
+                    elsif task.deadline == Time.zone.today + 1
                         status_class = "due-tomorrow"
-                    elsif task.deadline < Date.today
+                    elsif task.deadline < Time.zone.today
                         status_class = "overdue"
                     else
                         status_class = ""
                     end
                     %>
                     <div class="item-card <%= status_class %>">
-                    <div>
-                            <p class="item-title"><%= task.subject %>:<%= task.title %></p>
-                            <p class="item-date">締切: <%= task.deadline %></p>
-                    </div>
-                    <%= button_to "完了", task_path(task), method: :patch %>
+                        <div>
+                                <p class="item-title"><%= task.subject %>:<%= task.title %></p>
+                                <p class="item-date">締切: <%= task.deadline %></p>
+                        </div>
+                        <div class="card-actions">
+                            <%= button_to "編集", edit_task_path(task), method: :get, class: "edit-link" %>
+                            <%= button_to "完了", task_path(task), method: :patch, params: { task: { completed: true } } %>
+                        </div>
                     </div>
                 <% end %>
             </div>

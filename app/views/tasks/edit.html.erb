@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tasks</title>
+  <meta charset="utf-8">
+  <style>
+    body {
+      background-color: #333;
+      margin: 0;
+      font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+    }
+
+    .form-container {
+      background-color: white;
+      width: 100%;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+    }
+
+    .form-header {
+      background-color: #999;
+      padding: 20px 30px;
+      text-align: center;
+    }
+
+    .form-title {
+      color: #000000;
+      margin: 0;
+      font-size: 2em;
+      font-weight: bold;
+    }
+
+    .form-body {
+      flex: 1;
+      padding: 40px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    .back-link-container {
+      width: 100%;
+      max-width: 1400px;
+      margin-bottom: 20px;
+    }
+
+    .back-link {
+      color: #1E90FF;
+      text-decoration: none;
+      font-size: 1em;
+    }
+
+    .alert-danger {
+      width: 100%;
+      max-width: 1400px;
+      color: #721c24;
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      font-size: 0.95em;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px 40px;
+      margin-bottom: 30px;
+      width: 100%;
+      max-width: 1400px;
+    }
+
+    .field-label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 1.15em;
+    }
+
+    .field-label::before {
+      content: "・";
+      margin-right: 3px;
+    }
+
+    .input-field {
+      width: 100%;
+      box-sizing: border-box;
+      background-color: #DDD;
+      border: 1px solid #777;
+      border-radius: 10px;
+      padding: 16px 18px;
+      font-size: 1.15em;
+      color: #333;
+    }
+
+    textarea.input-field {
+      height: 150px;
+      resize: none;
+    }
+
+    .input-error {
+      border: 2px solid red !important;
+      background-color: #ffe6e6 !important;
+    }
+
+    .submit-container {
+      width: 100%;
+      max-width: 1400px;
+      text-align: center;
+    }
+
+    .submit-button {
+      background-color: #90EE90;
+      color: #333;
+      border: 1px solid #777;
+      border-radius: 10px;
+      padding: 16px 55px;
+      font-size: 1.3em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .submit-button:hover {
+      background-color: #7CCD7C;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="form-container">
+    <div class="form-header">
+      <h1 class="form-title">課題編集Form</h1>
+    </div>
+
+    <div class="form-body">
+      <div class="back-link-container">
+        <%= link_to '＜ 戻る', tasks_path, class: 'back-link' %>
+      </div>
+
+      <% if @task.errors.any? %>
+        <div class="alert-danger">
+          <ul>
+            <% @task.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%= form_with model: @task, local: true do |f| %>
+        <div class="field-grid">
+
+          <div class="field-item">
+            <%= f.label :subject, '科目名', class: 'field-label' %>
+            <%= f.text_field :subject, class: "input-field #{'input-error' if @task.errors[:subject].any?}" %>
+          </div>
+
+          <div class="field-item">
+            <%= f.label :deadline, '提出期限', class: 'field-label' %>
+            <%= f.date_field :deadline, class: "input-field #{'input-error' if @task.errors[:deadline].any?}" %>
+          </div>
+
+          <div class="field-item">
+            <%= f.label :title, '課題内容', class: 'field-label' %>
+            <%= f.text_area :title, class: "input-field #{'input-error' if @task.errors[:title].any?}" %>
+          </div>
+
+          <div class="field-item">
+            <%= f.label :content, '詳細', class: 'field-label' %>
+            <%= f.text_area :content, class: "input-field #{'input-error' if @task.errors[:content].any?}" %>
+          </div>
+
+        </div>
+
+        <div class="submit-container">
+          <%= f.submit '更新する', class: 'submit-button' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</body>
+</html>

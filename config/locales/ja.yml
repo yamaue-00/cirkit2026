@@ -1,0 +1,22 @@
+ja:
+  errors:
+    format: "%{attribute}%{message}"
+  activerecord:
+    attributes:
+      task:
+        subject: "科目名"
+        title: "課題内容"
+        content: "詳細"
+        deadline: "提出期限"
+    errors:
+      models:
+        task:
+          attributes:
+            subject:
+              blank: "を入力してください"
+            title:
+              blank: "を入力してください"
+            content:
+              blank: "を入力してください"
+            deadline:
+              blank: "を入力してください"

@@ -7,11 +7,15 @@ class TasksController < ApplicationController
         Task.where(completed: false).order(:created_at)
     else # "due" またはパラメータが無い場合はデフォルト(期限順)
         Task.where(completed: false).order(
-        Arel.sql("CASE WHEN deadline < '#{Date.today}' THEN 1 ELSE 0 END"),
+        Arel.sql("CASE WHEN deadline < '#{Time.zone.today}' THEN 1 ELSE 0 END"),
         :deadline
         )
     end
   end
+  def edit
+      @task = Task.find(params[:id])
+  end
+
 
   def new
     @task = Task.new
@@ -19,13 +23,13 @@ class TasksController < ApplicationController
 
   def main
     @tasks = Task.where(completed: false).order(
-        Arel.sql("CASE WHEN deadline < '#{Date.today}' THEN 1 ELSE 0 END"),
+        Arel.sql("CASE WHEN deadline < '#{Time.zone.today}' THEN 1 ELSE 0 END"),
         :deadline
     )
-    @overdue_tasks = Task.where(completed: false).where("deadline < ?", Date.today)
-    @today_tasks = Task.where(completed: false, deadline: Date.today)
-    @tomorrow_tasks = Task.where(completed: false, deadline: Date.tomorrow)
-    @two_days_tasks = Task.where(completed: false, deadline: Date.today + 2)
+    @overdue_tasks = Task.where(completed: false).where("deadline < ?", Time.zone.today)
+    @today_tasks = Task.where(completed: false, deadline: Time.zone.today)
+    @tomorrow_tasks = Task.where(completed: false, deadline: Time.zone.today + 1)
+    @two_days_tasks = Task.where(completed: false, deadline: Time.zone.today + 2)
   end
 
   def create
@@ -39,11 +43,15 @@ class TasksController < ApplicationController
     end
   end
 
-  def update
-    @task = Task.find(params[:id])
-    @task.update(completed: true)
-    redirect_to tasks_path, notice: "課題完了！"
-  end
+    def update
+        @task = Task.find(params[:id])
+
+        if @task.update(task_params)
+            redirect_to tasks_path, notice: "更新しました！"
+        else
+            render :edit, status: :unprocessable_entity
+        end
+    end
 
   def completed
     @tasks = Task.where(completed: true).order(:deadline)
@@ -52,6 +60,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:subject, :title, :content, :deadline)
+    params.require(:task).permit(:subject, :title, :content, :deadline, :completed)
   end
+  
 end
