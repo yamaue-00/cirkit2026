@@ -13,7 +13,7 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
 
     if @task.save
-      redirect_to new_task_path, notice: "追加完了！！"
+      redirect_to tasks_path, notice: "追加完了！！"
     else
       @tasks = Task.all
       render :new, status: :unprocessable_entity
