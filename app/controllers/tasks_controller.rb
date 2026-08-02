@@ -17,6 +17,13 @@ class TasksController < ApplicationController
     @task = Task.new
   end
 
+  def main
+    @tasks = Task.where(completed: false).order(
+        Arel.sql("CASE WHEN deadline < '#{Date.today}' THEN 1 ELSE 0 END"),
+        :deadline
+    )
+  end
+
   def create
     @task = Task.new(task_params)
 
