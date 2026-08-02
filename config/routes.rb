@@ -11,8 +11,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  resources :tasks, only: [:index, :create, :new, :update]
+ resources :tasks, only: [:index, :create, :new, :update]
   get "tasks/completed", to: "tasks#completed", as: :completed_tasks
-  root 'tasks#index' # トップページをindexにする場合
-  get "tasks/main", to:"tasks#main"
+  get "tasks/main", to: "tasks#main",as: :main_tasks
+  root 'tasks#main'
 end

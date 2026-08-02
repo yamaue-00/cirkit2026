@@ -8,6 +8,21 @@
       box-sizing: border-box;
     }
 
+    body {
+      background-color: #333;
+      margin: 0;
+      font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+    }
+
+    .form-container {
+      background-color: white;
+      width: 100%;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
     .form-header {
       background-color: #999;
       padding: 20px 30px;
@@ -93,6 +108,9 @@
       resize: none;
     }
 
+    .input-field-highlight {
+      border: 2px solid #1E90FF !important;
+    }
 
     .input-error {
       border: 2px solid red !important;
@@ -131,7 +149,7 @@
 
     <div class="form-body">
       <div class="back-link-container">
-        <%= link_to '＜ 戻る', tasks_path, class: 'back-link' %>
+        <%= link_to '＜ 戻る', main_tasks_path, class: 'back-link' %>
       </div>
 
       <%# バリデーションエラーメッセージの表示エリア %>

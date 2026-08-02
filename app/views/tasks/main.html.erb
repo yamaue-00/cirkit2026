@@ -456,15 +456,15 @@ td {
 
                 <!-- Task Buttons -->
                 <div class="task-button">
-                    <button class="button">
+                    <%= link_to new_task_path, class: 'button' do %>
                         <%= image_tag('group13.png', alt: 'Icon', class: 'task-button-icon') %>
-                        <span class="task-button-text">タスクを追加する</span>
-                    </button>
+                        <span class="task-button-text">課題を入力する</span>
+                    <% end %>
 
-                    <button class="button">
+                    <%= link_to tasks_path, class: 'button' do %>
                         <%= image_tag('group14.png', alt: 'Icon', class: 'task-button-icon') %>
                         <span class="task-button-text">タスクを編集する</span>
-                    </button>
+                    <% end %>
                 </div>
             </div>
 
