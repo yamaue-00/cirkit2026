@@ -15,15 +15,25 @@
         <th>締切日</th>
       </tr>
 
-      <% @tasks.each do |task
-        | %>
-        <tr>
-          <td><%= task.subject %></td>
-          <td><%= task.title%></td>
-          <td><%= task.content %></td>
-          <td><%= task.deadline %></td>
-        </tr>
-      <% end %>
+      <<% @tasks.each do |task| %>
+    <% 
+        if task.deadline == Date.today
+        bg_color = "red"
+        elsif task.deadline == Date.tomorrow 
+        bg_color = "yellow"
+        elsif task.deadline < Date.today
+        bg_color = "gray"
+        else
+        bg_color = ""
+        end
+    %>
+  <tr style="background-color: <%= bg_color %>;">
+    <td><%= task.subject %></td>
+    <td><%= task.title %></td>
+    <td><%= task.content %></td>
+    <td><%= task.deadline %></td>
+  </tr>
+<% end %>
     </table>
   </body>
 </html>

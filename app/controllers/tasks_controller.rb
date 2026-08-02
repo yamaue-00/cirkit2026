@@ -1,7 +1,10 @@
 class TasksController < ApplicationController
   def index
     @task = Task.new
-    @tasks = Task.all
+    @tasks = Task.order(
+    Arel.sql("CASE WHEN deadline < '#{Date.today}' THEN 1 ELSE 0 END"),
+    :deadline
+  )
   end
 
   def new
