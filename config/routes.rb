@@ -14,4 +14,5 @@ Rails.application.routes.draw do
   resources :tasks, only: [:index, :create, :new, :update]
   get "tasks/completed", to: "tasks#completed", as: :completed_tasks
   root 'tasks#index' # トップページをindexにする場合
+  get "tasks/main", to:"tasks#main"
 end
