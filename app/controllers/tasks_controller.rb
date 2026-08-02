@@ -1,9 +1,16 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.where(completed: false).order(
-      Arel.sql("CASE WHEN deadline < '#{Date.today}' THEN 1 ELSE 0 END"),
-      :deadline
-    )
+    @tasks = case params[:sort]
+    when "name"
+        Task.where(completed: false).order(:subject)
+    when "oldest"
+        Task.where(completed: false).order(:created_at)
+    else # "due" またはパラメータが無い場合はデフォルト(期限順)
+        Task.where(completed: false).order(
+        Arel.sql("CASE WHEN deadline < '#{Date.today}' THEN 1 ELSE 0 END"),
+        :deadline
+        )
+    end
   end
 
   def new

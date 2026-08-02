@@ -1,27 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-  <title>完了した課題</title>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+  <title>☆完了済み課題☆</title>
+
+  <style>
+    body {
+        margin: 0;
+        font-family: sans-serif;
+        background-color: #FFFFFF;
+    }
+
+    header {
+        background-color: #E6E6E6;
+        padding: 30px 50px;
+    }
+
+    h1 {
+        color: #000DFF;
+        margin: 0;
+        font-size: 24px;
+        margin-left: 30px;
+    }
+
+    .content {
+        padding: 40px 70px;
+    }
+
+    .modoru {
+        display: inline-block;
+        color: #4A90E2;
+        text-decoration: none;
+        margin-bottom: 24px;
+    }
+
+    h2 {
+        margin: 0;
+        font-size: 16px;
+        margin-bottom: 16px;
+    }
+
+    .assignment-list {
+        max-height: 400px;
+        overflow-y: auto;
+        margin-left: 30px;
+    }
+
+    .item-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #D9D9D9;
+        border-radius: 10px;
+        padding: 10px 16px;
+        margin-bottom: 10px;
+        width: 76%;
+    }
+
+    .item-card .item-title {
+        margin: 0;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .item-card .item-date {
+        margin: 2px 0 0;
+        font-size: 12px;
+        color: #666;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>☆完了済み課題☆</h1>
-  <%= link_to "＜ 一覧に戻る", tasks_path %>
-  <table>
-    <tr>
-      <th>科目名</th>
-      <th>タイトル</th>
-      <th>内容</th>
-      <th>締切日</th>
-    </tr>
-    <% @tasks.each do |task| %>
-      <tr>
-        <td><%= task.subject %></td>
-        <td><%= task.title %></td>
-        <td><%= task.content %></td>
-        <td><%= task.deadline %></td>
-      </tr>
-    <% end %>
-  </table>
+  <header>
+    <h1>☆完了済み課題☆</h1>
+  </header>
+
+  <div class="content">
+    <%= link_to "＜一覧に戻る", tasks_path, class: "modoru" %>
+
+    <h2>完了した課題</h2>
+
+    <div class="assignment-list">
+      <% @tasks.each do |task| %>
+        <div class="item-card">
+          <div>
+            <p class="item-title"><%= task.subject %>:<%= task.title %></p>
+            <p class="item-date">締切: <%= task.deadline %></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </body>
 </html>
