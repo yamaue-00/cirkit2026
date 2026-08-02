@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>完了した課題</title>
+  <meta charset="utf-8">
+</head>
+<body>
+  <h1>☆完了済み課題☆</h1>
+  <%= link_to "＜ 一覧に戻る", tasks_path %>
+  <table>
+    <tr>
+      <th>科目名</th>
+      <th>タイトル</th>
+      <th>内容</th>
+      <th>締切日</th>
+    </tr>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.subject %></td>
+        <td><%= task.title %></td>
+        <td><%= task.content %></td>
+        <td><%= task.deadline %></td>
+      </tr>
+    <% end %>
+  </table>
+</body>
+</html>

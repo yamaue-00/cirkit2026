@@ -1,15 +1,13 @@
 class TasksController < ApplicationController
   def index
-    @task = Task.new
-    @tasks = Task.order(
-    Arel.sql("CASE WHEN deadline < '#{Date.today}' THEN 1 ELSE 0 END"),
-    :deadline
-  )
+    @tasks = Task.where(completed: false).order(
+      Arel.sql("CASE WHEN deadline < '#{Date.today}' THEN 1 ELSE 0 END"),
+      :deadline
+    )
   end
 
   def new
     @task = Task.new
-    @tasks = Task.all
   end
 
   def create
@@ -21,6 +19,16 @@ class TasksController < ApplicationController
       @tasks = Task.all
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def update
+    @task = Task.find(params[:id])
+    @task.update(completed: true)
+    redirect_to tasks_path, notice: "課題完了！"
+  end
+
+  def completed
+    @tasks = Task.where(completed: true).order(:deadline)
   end
 
   private
