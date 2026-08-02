@@ -1,229 +1,184 @@
-<%# app/views/tasks/index.html.erb %>
-
-<style>
-@charset "UTF-8";
-
-body{
-    margin: 0;
-}
-
-.wrapper{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px 50px;
-
-    width: 100%;
-    box-sizing: border-box;
-    margin: 0 auto;
-    padding: 20px 40px;
-}
-
-.header{
-    background-color: gray;
-    color:rgb(240, 240, 90);
-    grid-column: 1/ -1;
-    width: 100%;
-    padding: 5px 10px;
-    box-sizing: border-box;
-    text-align: left;
-}
-
-.back-btn{
-    grid-column: 1 / -1;
-    grid-row: 1;
-    justify-self: start;
-    font-size: 24px;
-    padding: 30px 40px;
-}
-
-.subject {
-    grid-column: 1;
-    grid-row: 2;
-}
-
-/*上段右*/
-.subject_3 {
-    grid-column: 2;
-    grid-row: 2;
-}
-
-/*下段左*/
-.subject_1 {
-    grid-column: 1;
-    grid-row: 3;
-}
-
-/*下段右*/
-.subject_2 {
-    grid-column: 2;
-    grid-row: 3;
-}
-
-.button{
-  grid-column: 1 / -1;
-  grid-row: 5;
-  justify-self: center;
-  margin-top: 10px;
-  width: 100%;
-  text-align: center;
-}
-
-.styled {
-  border: 0;
-  line-height: 2.5;
-  padding: 0 20px;
-  font-size: 1rem;
-  text-align: center;
-  color: black;
-  border-radius: 10px;
-  background-color: #7CE877;
-  background-image: linear-gradient(
-    to top left,
-    rgb(0 0 0 / 0.2),
-    rgb(0 0 0 / 0.2) 30%,
-    transparent
-  );
-  box-shadow:
-    inset 2px 2px 3px rgb(255 255 255 / 0.6),
-    inset -2px -2px 3px rgb(0 0 0 / 0.6);
-}
-
-.styled:hover {
-  background-color: #32cd32;
-}
-
-.styled:active {
-  box-shadow:
-    inset -2px -2px 3px rgb(255 255 255 / 0.6),
-    inset 2px 2px 3px rgb(0 0 0 / 0.6);
-}
-
-
-ul {
-    list-style: none; 
-    padding-left: 0;
-    margin: 0 0 12px 0;
-}
-
-ul li {
-    font-size: 24px;     
-    font-weight: normal;  
-    color: #000;
-}
-
-
-ul li::before {
-    content: "・ ";
-}
-
-
-input[type="text"],
-textarea {
-    width: 100%;
-    box-sizing: border-box; 
-    
-    background-color: #d9d9d9; 
-    border: 2px solid #000;  
-    border-radius: 16px;       
-    
-    padding: 16px 20px;
-    font-size: 20px;
-    outline: none; 
-}
-
-
-textarea {
-    height: 200px;
-    resize: vertical;
-}
-
-input[type="text"] {
-    height: 60px; 
-}
-
-
-textarea {
-    height: 220px; 
-    resize: vertical;
-}
-
-
-input[type="text"]::placeholder,
-textarea::placeholder {
-    color: #ffffff;
-    opacity: 1; 
-}
-
-
-</style>
-
 <!DOCTYPE html>
-<html lang="ja">
+<html>
+<head>
+  <title>Tasks</title>
+  <meta charset="utf-8">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
- <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scalse=1.0">
+    .form-header {
+      background-color: #999;
+      padding: 20px 30px;
+      text-align: center;
+    }
 
- </head>
+    .form-title {
+      color: #FFD700;
+      margin: 0;
+      font-size: 2em;
+      font-weight: bold;
+    }
+
+    .form-body {
+      flex: 1;
+      padding: 40px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .back-link-container {
+      width: 100%;
+      max-width:  1400px;;
+      margin-bottom: 20px;
+    }
+
+    .back-link {
+      color: #1E90FF;
+      text-decoration: none;
+      font-size: 1em;
+    }
+
+    .alert-danger {
+      width: 100%;
+      max-width: 1400px;
+      color: #721c24;
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      font-size: 0.95em;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px 40px;
+      margin-bottom: 30px;
+      width: 100%;
+       max-width: 1400px;
+    }
+
+    .field-label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 1.15em;
+    }
+
+    .field-label::before {
+      content: "・";
+      margin-right: 3px;
+    }
+
+    .input-field {
+      width: 100%;
+      background-color: #DDD;
+      border: 1px solid #777;
+      border-radius: 10px;
+      padding: 16px 18px;
+      font-size: 1.15em;
+      color: #333;
+    }
+
+    .input-field::placeholder {
+      color: #AAA;
+    }
+
+    textarea.input-field {
+      height: 150px;
+      resize: none;
+    }
 
 
- <body>
-    <div class="header">
-            <div class="text">
-                <h1>☆課題入力Form☆</h1>
-            </div>
+    .input-error {
+      border: 2px solid red !important;
+      background-color: #ffe6e6 !important;
+    }
+
+    .submit-container {
+      width: 100%;
+      max-width: 1400px;;
+      text-align: center;
+    }
+
+    .submit-button {
+      background-color: #90EE90;
+      color: #333;
+      border: 1px solid #777;
+      border-radius: 10px;
+      padding: 16px 55px;
+      font-size: 1.3em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .submit-button:hover {
+      background-color: #7CCD7C;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="form-container">
+    <div class="form-header">
+      <h1 class="form-title">☆課題入力Form☆</h1>
     </div>
-    <a href="#" class="back-btn">&lt; 戻る</a>
-    <div class="wrapper">
-        
-        <div class="subject">
-             <div class="form-up">
-                <ul>
-                    <li>科目名</li>
-                </ul>
-                <div class="input">
-                    <input type="text" name="username" placeholder="例:修学基礎A">
-                </div>
-             </div>
+
+    <div class="form-body">
+      <div class="back-link-container">
+        <%= link_to '＜ 戻る', tasks_path, class: 'back-link' %>
+      </div>
+
+      <%# バリデーションエラーメッセージの表示エリア %>
+      <% if @task.errors.any? %>
+        <div class="alert-danger">
+          <ul>
+            <% @task.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%= form_with model: @task, local: true do |f| %>
+        <div class="field-grid">
+
+          <%# 科目名 (subject) %>
+          <div class="field-item">
+            <%= f.label :subject, '科目名', class: 'field-label' %>
+            <%= f.text_field :subject, class: "input-field input-field-highlight #{'input-error' if @task.errors[:subject].any?}", placeholder: '例：チャンカレ基礎' %>
+          </div>
+
+          <%# 提出期限 (deadline) %>
+          <div class="field-item">
+            <%= f.label :deadline, '提出期限', class: 'field-label' %>
+            <%= f.date_field :deadline, class: "input-field #{'input-error' if @task.errors[:deadline].any?}" %>
+          </div>
+
+          <%# 課題内容 (title) %>
+          <div class="field-item">
+            <%= f.label :title, '課題内容', class: 'field-label' %>
+            <%= f.text_area :title, class: "input-field #{'input-error' if @task.errors[:title].any?}", placeholder: '例：メニュー考案' %>
+          </div>
+
+          <%# 詳細 (content) %>
+          <div class="field-item">
+            <%= f.label :content, '詳細', class: 'field-label' %>
+            <%= f.text_area :content, class: "input-field #{'input-error' if @task.errors[:content].any?}", placeholder: '例：1000円くらいする' %>
+          </div>
+
         </div>
 
-        <div class="subject_1">
-            <div class="text">
-                <ul>
-                    <li>課題内容</li>
-                </ul>
-                <div class="input_1">
-                    <textarea placeholder="例：メニュー考案"></textarea>
-                </div>
-            </div>
+        <div class="submit-container">
+          <%= f.submit '追加する', class: 'submit-button' %>
         </div>
-    
-        <div class="subject_2">
-            <div class="text">
-                <ul>
-                    <li>詳細</li>
-                </ul>
-                <div class="input_2">
-                    <textarea placeholder="例：1000円くらいする"></textarea>
-                </div>
-            </div>
-        </div>
-
-        <div class="subject_3">
-            <div class="text">
-                <ul>
-                    <li>提出期限</li>
-                </ul>
-                <div class="input_3">
-                    <input type="text" name="username" placeholder="例:2099年/99月/99日/23:59">
-                </div>
-            </div>
-        </div>
-
-        <div class="button">
-            <button class="favorite styled" type="button">追加する</button>
-        </div>
+      <% end %>
     </div>
-    
- </body>
+  </div>
+</body>
 </html>
