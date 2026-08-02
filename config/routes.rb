@@ -13,4 +13,6 @@ Rails.application.routes.draw do
   # root "posts#index"
   resources :tasks, only: [:index, :create, :new]
   root 'tasks#index' # トップページをindexにする場合
+  get 'tasks/main', to: 'tasks#main'  # ← 追加
+
 end
