@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 
 <head>
     <meta charset="UTF-8">
-    
+
     <title>My Website</title>
     <%= stylesheet_link_tag 'main', media: 'all' %>
 </head>
@@ -180,6 +179,18 @@
         <br>
         <br>
 
+        <div class="notification-card">
+            <div class="card-title">新着メールがあります</div>
+            <div class="card-content">
+                <span class="red-dot"></span>
+                <div class="text-body">
+                    <p>PDの課題が期限２日前になりました。</p>
+                    <!--<p><%= @report&.name %>が期限<%= @days_left %>日前になりました</p>-->
+                    <p>早期に取り組みましょう。</p>
+                </div>
+            </div>
+        </div>
+
         <div class="task-status">
             <h1 class="task-status-title">
                 Task Status
@@ -305,7 +316,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!--Footer-->
         <div class="footer">
             <div class="footer-inner">
