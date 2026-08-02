@@ -342,6 +342,50 @@ td {
     }
 }
 
+
+/* カード全体の設定 */
+.notification-card {
+  margin-left: 20px;
+  margin-bottom: 40px;
+  width: 320px; /* 必要に応じて調整 */
+  padding: 12px 16px;
+  background-color: #ffffff;
+  border: 2px solid #e2e8f0; /* 薄いグレーの枠線 */
+  border-radius: 16px; /* 角丸 */
+  font-family: sans-serif;
+  color: #1a1a1a;
+  box-sizing: border-box;
+}
+
+/* 1行目のタイトル */
+.card-title {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.card-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px; /* 赤丸とテキストの間の余白 */
+}
+
+
+.red-dot {
+  width: 16px;
+  height: 16px;
+  background-color: #ff0000;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 3px; /* テキストの1行目と高さを揃える調整 */
+}
+
+.text-body p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+
 /*Footer*/
 .footer{
     background-color: #555;
@@ -352,6 +396,8 @@ td {
     padding: 20px 0;
     text-align: center;
 }
+
+
 
 </style>
 
