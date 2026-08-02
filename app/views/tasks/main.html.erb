@@ -1,0 +1,319 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    
+    <title>My Website</title>
+    <%= stylesheet_link_tag 'main', media: 'all' %>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <div class="header-text">
+                <p class="header-text-title">
+                    タスク管理アプリ
+                </p>
+                <!--<p class="header-text-subtitle">
+                    ユーザー名
+                </p>-->
+            </div>
+        </header>
+
+        <div class="content">
+            <div class="content-inner">
+
+                <!-- calendar -->
+                <h1 class="calendar-title">
+                    calendar
+                </h1>
+                <div class="calendar-container">
+                    <h1>August 2026</h1>
+                    <table class="calendar">
+                        <tr>
+                            <th>SUN</th>
+                            <th>MON</th>
+                            <th>TUE</th>
+                            <th>WED</th>
+                            <th>THU</th>
+                            <th>FRI</th>
+                            <th>SAT</th>
+                        </tr>
+                        <tr class="day">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>1</td>
+                        </tr>
+                        <tr class="day">
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td>7</td>
+                            <td>8</td>
+                        </tr>
+                        <tr class="day">
+                            <td>9</td>
+                            <td>10</td>
+                            <td>11</td>
+                            <td>12</td>
+                            <td>13</td>
+                            <td>14</td>
+                            <td>15</td>
+                        </tr>
+                        <tr class="day">
+                            <td>16</td>
+                            <td>17</td>
+                            <td>18</td>
+                            <td>19</td>
+                            <td>20</td>
+                            <td>21</td>
+                            <td>22</td>
+                        </tr>
+                        <tr class="day">
+                            <td>23</td>
+                            <td>24</td>
+                            <td>25</td>
+                            <td>26</td>
+                            <td>27</td>
+                            <td>28</td>
+                            <td>29</td>
+                        </tr>
+                        <tr class="day">
+                            <td>30</td>
+                            <td>31</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- Task Buttons -->
+                <div class="task-button">
+                    <button class="button">
+                        <%= image_tag('Group 13.png', alt: 'Icon', class: 'task-button-icon') %>
+                        <span class="task-button-text">タスクを追加する</span>
+                    </button>
+
+                    <button class="button">
+                        <%= image_tag('Group 14.png', alt: 'Icon', class: 'task-button-icon') %>
+                        <span class="task-button-text">タスクを編集する</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Priority -->
+            <div class="priority">
+                <h1 class="priority-title">
+                    Priority
+                </h1>
+                <div class="priority-text-over">
+                    <h2>over</h2>
+                    <div class="priority-text-over-text">
+                        <ul>
+                            <li>
+                                <p class="priority-text-over-list">AI基礎</p>
+                            </li>
+                            <li>
+                                <p class="priority-text-over-list">プロジェクトデザイン</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="priority-text-first">
+                    <h2>First</h2>
+                    <div class="priority-text-first-text">
+                        <ul>
+                            <li>
+                                <p class="priority-text-first-list">新聞ポートフォリオ</p>
+                            </li>
+                            <li>
+                                <p class="priority-text-first-list">一週間の行動履歴</p>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="priority-text-second">
+                    <h2>Second</h2>
+                    <div class="priority-text-second-text">
+                        <ul>
+                            <li>
+                                <p class="priority-text-second-list">線形代数学</p>
+                            </li>
+                            <li>
+                                <p class="priority-text-second-list">TOEIC</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="priority-text-third">
+                    <h2>Third</h2>
+                    <div class="priority-text-third-text">
+                        <ul>
+                            <li>
+                                <p class="priority-text-third-list">データサイエンス</p>
+                            </li>
+                            <li>
+                                <p class="priority-text-third-list">プログラミング</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <br>
+        <br>
+
+        <div class="task-status">
+            <h1 class="task-status-title">
+                Task Status
+            </h1>
+
+            <div class="status-board">
+                <!--０日-->
+                <div class="status-urgent">
+                    <div class="rest-day-header">
+                        残り0日
+                    </div>
+                    <div class="rest-task-card">
+                        <ul class="task-list">
+                            <li>
+                                PDレポート
+                            </li>
+                            <li>
+                                AI基礎
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!--１日-->
+                <div class="status-column">
+                    <div class="day-header">
+                        残り１日
+                    </div>
+                    <div class="task-card">
+                        <ul class="task-list">
+                            <li>
+                                新聞ポートフォリオ
+                            </li>
+                            <li>
+                                一週間の行動履歴
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!--２日-->
+                <div class="status-column">
+                    <div class="day-header">
+                        残り２日
+                    </div>
+                    <div class="task-card">
+                        <ul class="task-list">
+                            <li>
+                                線形代数学
+                            </li>
+                            <li>
+                                TOEIC
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!--３日-->
+                <div class="status-column">
+                    <div class="day-header">
+                        残り３日
+                    </div>
+                    <div class="task-card">
+                        <ul class="task-list">
+                            <li>
+                                データサイエンス
+                            </li>
+                            <li>
+                                プログラミング
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!--４日-->
+                <div class="status-column">
+                    <div class="day-header">
+                        残り４日
+                    </div>
+                    <div class="task-card">
+                        <ul class="task-list">
+                            <li>
+                                ～～～
+                            </li>
+                            <li>
+                                ～～～
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!--５日-->
+                <div class="status-column">
+                    <div class="day-header">
+                        残り５日
+                    </div>
+                    <div class="task-card">
+                        <ul class="task-list">
+                        </ul>
+                    </div>
+                </div>
+
+                <!--６日-->
+                <div class="status-column">
+                    <div class="day-header">
+                        残り６日
+                    </div>
+                    <div class="task-card">
+                        <ul class="task-list">
+                        </ul>
+                    </div>
+                </div>
+
+                <!--７日-->
+                <div class="status-column">
+                    <div class="day-header">
+                        残り７日
+                    </div>
+                    <div class="task-card">
+                        <ul class="task-list">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!--Footer-->
+        <div class="footer">
+            <div class="footer-inner">
+                <!--<p class="copyright">© 2026 Hackit_Cirkit-a</p>-->
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
