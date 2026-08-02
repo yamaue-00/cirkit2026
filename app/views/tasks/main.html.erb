@@ -2,7 +2,6 @@
 <html lang="ja">
 
 <style>
-
     @charset "UTF-8";
 
     html,
@@ -11,6 +10,14 @@
         padding: 0;
         overflow-x: hidden;
         width: 100%;
+    }
+
+    a {
+        color: black;
+    }
+
+    a:visited {
+        color: black;
     }
 
     .header-text {
@@ -24,7 +31,6 @@
     .header-text-title {
         font-size: 24px;
         margin-left: 20px;
-
     }
 
     .header-text-subtitle {
@@ -33,7 +39,6 @@
         align-self: center;
     }
 
-    /*カレンダー・優先度*/
     .content {
         width: 100%;
         min-height: 100vh;
@@ -86,7 +91,6 @@
         .priority-title {
             padding-top: 20px;
         }
-
     }
 
     @media (max-width: 800px) {
@@ -143,7 +147,6 @@
         }
     }
 
-
     h1 {
         height: 80px;
         line-height: 80px;
@@ -189,6 +192,10 @@
         margin-right: 30px;
     }
 
+    .rest-day {
+        font-size: 16px;
+    }
+
     .priority-title {
         text-align: center;
         padding-top: 40px;
@@ -196,22 +203,28 @@
     }
 
     .priority-text-over-list {
-        color: #ef0000;
+        font-weight: bold;
+        font-size: 20px;
+        color: #9A55F3;
     }
 
     .priority-text-first-list {
-        color: #fbc700;
+        font-weight: bold;
+        font-size: 20px;
+        color: #FF4D4F;
     }
 
     .priority-text-second-list {
-        color: #28a745;
+        font-weight: bold;
+        font-size: 20px;
+        color: #FFb000;
     }
 
     .priority-text-third-list {
-        color: #007bff;
+        font-weight: bold;
+        font-size: 20px;
+        color: #555;
     }
-
-
 
     /*タスクの追加*/
     .task-button {
@@ -244,6 +257,11 @@
 
     @media (max-width: 800px) {
         .button {
+            justify-content: center;
+        }
+
+        .task-button {
+            flex-direction: row;
             justify-content: center;
         }
     }
@@ -320,11 +338,8 @@
         line-height: 1.4;
     }
 
-
-
-
     @media (max-width: 800px) {
-        .task-status{
+        .task-status {
             padding: 10px;
             padding-bottom: 30px;
         }
@@ -337,19 +352,18 @@
         .task-card {
             min-height: 160px;
         }
-        .rest-task-card{
+
+        .rest-task-card {
             min-height: 160px;
         }
     }
 
-
     /*Footer*/
-    .footer{
+    .footer {
         background-color: #555;
         width: 100vw;
         height: 40px;
         margin-left: calc(50%-100vw);
-
         padding: 20px 0;
         text-align: center;
     }
@@ -358,9 +372,10 @@
         display: inline-block;
         margin: 0;
     }
+
     .calendar td {
-    position: relative;
-    padding-bottom: 16px;
+        position: relative;
+        padding-bottom: 16px;
     }
 
     .task-dot-container {
@@ -379,14 +394,13 @@
         border-radius: 50%;
         background-color: #ff838b;
     }
-
 </style>
 
 <head>
     <meta charset="UTF-8">
 
     <title>My Website</title>
-    
+
 </head>
 
 <body>
@@ -472,52 +486,52 @@
                     Priority
                 </h1>
                 <div class="priority-text-over">
-                    <h2>over</h2>
+                    <h2 class="rest-day">期限切れ</h2>
                     <div class="priority-text-over-text">
                         <ul>
-                        <% @overdue_tasks.each do |task| %>
+                            <% @overdue_tasks.each do |task| %>
                             <li>
-                            <p class="priority-text-over-list"><%= task.subject %></p>
+                                <p class="priority-text-over-list"><%= task.subject %></p>
                             </li>
-                        <% end %>
+                            <% end %>
                         </ul>
                     </div>
                 </div>
                 <div class="priority-text-first">
-                <h2>First</h2>
+                    <h2 class="rest-day">今日まで</h2>
                     <div class="priority-text-first-text">
                         <ul>
-                        <% @today_tasks.each do |task| %>
+                            <% @today_tasks.each do |task| %>
                             <li>
-                            <p class="priority-text-first-list"><%= task.subject %></p>
+                                <p class="priority-text-first-list"><%= task.subject %></p>
                             </li>
-                        <% end %>
+                            <% end %>
                         </ul>
                     </div>
                 </div>
 
                 <div class="priority-text-second">
-                    <h2>Second</h2>
+                    <h2 class="rest-day">明日まで</h2>
                     <div class="priority-text-second-text">
                         <ul>
-                        <% @tomorrow_tasks.each do |task| %>
+                            <% @tomorrow_tasks.each do |task| %>
                             <li>
-                            <p class="priority-text-second-list"><%= task.subject %></p>
+                                <p class="priority-text-second-list"><%= task.subject %></p>
                             </li>
-                        <% end %>
+                            <% end %>
                         </ul>
                     </div>
                 </div>
 
                 <div class="priority-text-third">
-                    <h2>Third</h2>
+                    <h2 class="rest-day">明後日まで</h2>
                     <div class="priority-text-third-text">
                         <ul>
-                        <% @two_days_tasks.each do |task| %>
+                            <% @two_days_tasks.each do |task| %>
                             <li>
-                            <p class="priority-text-third-list"><%= task.subject %></p>
+                                <p class="priority-text-third-list"><%= task.subject %></p>
                             </li>
-                        <% end %>
+                            <% end %>
                         </ul>
                     </div>
                 </div>
@@ -563,4 +577,3 @@
 </body>
 
 </html>
-
