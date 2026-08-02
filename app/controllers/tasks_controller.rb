@@ -22,6 +22,10 @@ class TasksController < ApplicationController
         Arel.sql("CASE WHEN deadline < '#{Date.today}' THEN 1 ELSE 0 END"),
         :deadline
     )
+    @overdue_tasks = Task.where(completed: false).where("deadline < ?", Date.today)
+    @today_tasks = Task.where(completed: false, deadline: Date.today)
+    @tomorrow_tasks = Task.where(completed: false, deadline: Date.tomorrow)
+    @two_days_tasks = Task.where(completed: false, deadline: Date.today + 2)
   end
 
   def create
