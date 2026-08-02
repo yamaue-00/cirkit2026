@@ -178,7 +178,30 @@
         flex-direction: column;
         align-items: flex-end;
         gap: 8px;
-}
+    }
+
+    .card-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .edit-link {
+        color: blue;
+        font-weight: bold;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .card-actions button,
+    .card-actions .edit-link {
+        border: none;
+        background: none;
+        color: blue;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 14px;
+    }
   </style>
 </head>
 
@@ -225,11 +248,14 @@
                     end
                     %>
                     <div class="item-card <%= status_class %>">
-                    <div>
-                            <p class="item-title"><%= task.subject %>:<%= task.title %></p>
-                            <p class="item-date">締切: <%= task.deadline %></p>
-                    </div>
-                    <%= button_to "完了", task_path(task), method: :patch %>
+                        <div>
+                                <p class="item-title"><%= task.subject %>:<%= task.title %></p>
+                                <p class="item-date">締切: <%= task.deadline %></p>
+                        </div>
+                        <div class="card-actions">
+                            <%= button_to "編集", edit_task_path(task), method: :get, class: "edit-link" %>
+                            <%= button_to "完了", task_path(task), method: :patch, params: { task: { completed: true } } %>
+                        </div>
                     </div>
                 <% end %>
             </div>

@@ -12,6 +12,11 @@ class TasksController < ApplicationController
         )
     end
   end
+  
+  def edit
+      @task = Task.find(params[:id])
+  end
+
 
   def new
     @task = Task.new
@@ -39,11 +44,15 @@ class TasksController < ApplicationController
     end
   end
 
-  def update
-    @task = Task.find(params[:id])
-    @task.update(completed: true)
-    redirect_to tasks_path, notice: "課題完了！"
-  end
+    def update
+        @task = Task.find(params[:id])
+
+        if @task.update(task_params)
+            redirect_to tasks_path, notice: "更新しました！"
+        else
+            render :edit, status: :unprocessable_entity
+        end
+    end
 
   def completed
     @tasks = Task.where(completed: true).order(:deadline)
@@ -54,4 +63,5 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:subject, :title, :content, :deadline)
   end
+  
 end
