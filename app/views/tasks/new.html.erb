@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tasks</title>
+    <meta charset="utf-8">
+  </head>
+
+  <body>
+    <h1>課題の一覧</h1>
+    <table>
+      <tr>
+        <th>科目名</th>
+        <th>タイトル</th>
+        <th>内容</th>
+        <th>締切日</th>
+      </tr>
+
+      <% @tasks.each do |task
+        | %>
+        <tr>
+          <td><%= task.subject %></td>
+          <td><%= task.title%></td>
+          <td><%= task.content %></td>
+          <td><%= task.deadline %></td>
+        </tr>
+      <% end %>
+    </table>
+  </body>
+</html>
