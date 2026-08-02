@@ -21,16 +21,22 @@ class TasksController < ApplicationController
     @task = Task.new
   end
 
-  def main
-    @tasks = Task.where(completed: false).order(
-        Arel.sql("CASE WHEN deadline < '#{Time.zone.today}' THEN 1 ELSE 0 END"),
-        :deadline
-    )
-    @overdue_tasks = Task.where(completed: false).where("deadline < ?", Time.zone.today)
-    @today_tasks = Task.where(completed: false, deadline: Time.zone.today)
-    @tomorrow_tasks = Task.where(completed: false, deadline: Time.zone.today + 1)
-    @two_days_tasks = Task.where(completed: false, deadline: Time.zone.today + 2)
-  end
+    def main
+        @tasks = Task.where(completed: false).order(
+            Arel.sql("CASE WHEN deadline < '#{Time.zone.today}' THEN 1 ELSE 0 END"),
+            :deadline
+        )
+        @overdue_tasks = Task.where(completed: false).where("deadline < ?", Time.zone.today)
+        @today_tasks = Task.where(completed: false, deadline: Time.zone.today)
+        @tomorrow_tasks = Task.where(completed: false, deadline: Time.zone.today + 1)
+        @two_days_tasks = Task.where(completed: false, deadline: Time.zone.today + 2)
+
+        @days_tasks = (0..7).map do |days|
+            Task.where(completed: false, deadline: Time.zone.today + days)
+        end
+
+        @task_counts_by_date = Task.where(completed: false).group(:deadline).count
+    end
 
   def create
     @task = Task.new(task_params)

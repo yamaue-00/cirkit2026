@@ -16,7 +16,6 @@
         color: black;
     }
 
-
     a:visited {
         color: black;
     }
@@ -32,7 +31,6 @@
     .header-text-title {
         font-size: 24px;
         margin-left: 20px;
-
     }
 
     .header-text-subtitle {
@@ -41,7 +39,6 @@
         align-self: center;
     }
 
-    /*カレンダー・優先度*/
     .content {
         width: 100%;
         min-height: 100vh;
@@ -94,7 +91,6 @@
         .priority-title {
             padding-top: 20px;
         }
-
     }
 
     @media (max-width: 800px) {
@@ -118,6 +114,7 @@
             max-width: 400px;
             box-sizing: border-box;
             padding: 0 20px 30px 20px;
+            margin-left: 10px;
             align-items: center;
             justify-content: center;
         }
@@ -149,7 +146,6 @@
             padding-top: 20px;
         }
     }
-
 
     h1 {
         height: 80px;
@@ -197,7 +193,7 @@
     }
 
     .rest-day {
-        font-size: px;
+        font-size: 16px;
     }
 
     .priority-title {
@@ -229,14 +225,6 @@
         font-size: 20px;
         color: #555;
     }
-
-    /*
-#ef0000
-#fbc700
-#28a745
-#007bff
-*/
-
 
     /*タスクの追加*/
     .task-button {
@@ -350,9 +338,6 @@
         line-height: 1.4;
     }
 
-
-
-
     @media (max-width: 800px) {
         .task-status {
             padding: 10px;
@@ -373,16 +358,41 @@
         }
     }
 
-
     /*Footer*/
     .footer {
         background-color: #555;
         width: 100vw;
         height: 40px;
         margin-left: calc(50%-100vw);
-
         padding: 20px 0;
         text-align: center;
+    }
+
+    .task-button form {
+        display: inline-block;
+        margin: 0;
+    }
+
+    .calendar td {
+        position: relative;
+        padding-bottom: 16px;
+    }
+
+    .task-dot-container {
+        position: absolute;
+        bottom: 2px;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        gap: 2px;
+    }
+
+    .task-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: #ff838b;
     }
 </style>
 
@@ -414,7 +424,7 @@
                     calendar
                 </h1>
                 <div class="calendar-container">
-                    <h1>August 2026</h1>
+                    <h1><%= Time.zone.today.strftime("%B %Y") %></h1>
                     <table class="calendar">
                         <tr>
                             <th>SUN</th>
@@ -425,73 +435,47 @@
                             <th>FRI</th>
                             <th>SAT</th>
                         </tr>
+
+                        <%
+                        first_day = Time.zone.today.beginning_of_month
+                        last_day = Time.zone.today.end_of_month
+                        start_offset = first_day.wday # 1日が何曜日か(0=日曜)
+                        all_days = Array.new(start_offset, nil) + (first_day..last_day).to_a
+                        weeks = all_days.each_slice(7)
+                        %>
+
+                        <% weeks.each do |week| %>
                         <tr class="day">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>1</td>
+                            <% week.each do |date| %>
+                            <td>
+                                <% if date %>
+                                <%= date.day %>
+                                <% count = @task_counts_by_date[date] || 0 %>
+                                <% if count > 0 %>
+                                    <div class="task-dot-container">
+                                    <% count.times do %>
+                                        <span class="task-dot"></span>
+                                    <% end %>
+                                    </div>
+                                <% end %>
+                                <% end %>
+                            </td>
+                            <% end %>
                         </tr>
-                        <tr class="day">
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td>6</td>
-                            <td>7</td>
-                            <td>8</td>
-                        </tr>
-                        <tr class="day">
-                            <td>9</td>
-                            <td>10</td>
-                            <td>11</td>
-                            <td>12</td>
-                            <td>13</td>
-                            <td>14</td>
-                            <td>15</td>
-                        </tr>
-                        <tr class="day">
-                            <td>16</td>
-                            <td>17</td>
-                            <td>18</td>
-                            <td>19</td>
-                            <td>20</td>
-                            <td>21</td>
-                            <td>22</td>
-                        </tr>
-                        <tr class="day">
-                            <td>23</td>
-                            <td>24</td>
-                            <td>25</td>
-                            <td>26</td>
-                            <td>27</td>
-                            <td>28</td>
-                            <td>29</td>
-                        </tr>
-                        <tr class="day">
-                            <td>30</td>
-                            <td>31</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        <% end %>
                     </table>
                 </div>
 
                 <!-- Task Buttons -->
                 <div class="task-button">
-                    <%= link_to new_task_path, class: 'button' do %>
-                    <%= image_tag('group13.png', alt: 'Icon', class: 'task-button-icon') %>
-                    <span class="task-button-text">課題を入力する</span>
+                    <%= button_to new_task_path, method: :get, class: 'button' do %>
+                        <%= image_tag('group13.png', alt: 'Icon', class: 'task-button-icon') %>
+                        <span class="task-button-text">課題を入力する</span>
                     <% end %>
 
-                    <%= link_to tasks_path, class: 'button' do %>
-                    <%= image_tag('group14.png', alt: 'Icon', class: 'task-button-icon') %>
-                    <span class="task-button-text">タスクを編集する</span>
+                    <%= button_to tasks_path, method: :get, class: 'button' do %>
+                        <%= image_tag('group14.png', alt: 'Icon', class: 'task-button-icon') %>
+                        <span class="task-button-text">タスクを編集する</span>
                     <% end %>
                 </div>
             </div>
@@ -564,124 +548,21 @@
                 Task Status
             </h1>
 
-            <div class="status-board">
-                <!--０日-->
-                <div class="status-urgent">
-                    <div class="rest-day-header">
-                        残り0日
+           <div class="status-board">
+                <% @days_tasks.each_with_index do |tasks_for_day, days| %>
+                    <div class="<%= days == 0 ? 'status-urgent' : 'status-column' %>">
+                        <div class="<%= days == 0 ? 'rest-day-header' : 'day-header' %>">
+                            残り<%= days %>日
+                        </div>
+                        <div class="<%= days == 0 ? 'rest-task-card' : 'task-card' %>">
+                            <ul class="task-list">
+                                <% tasks_for_day.each do |task| %>
+                                    <li><%= task.subject %>:<%= task.title %></li>
+                                <% end %>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="rest-task-card">
-                        <ul class="task-list">
-                            <li>
-                                PDレポート
-                            </li>
-                            <li>
-                                AI基礎
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!--１日-->
-                <div class="status-column">
-                    <div class="day-header">
-                        残り１日
-                    </div>
-                    <div class="task-card">
-                        <ul class="task-list">
-                            <li>
-                                新聞ポートフォリオ
-                            </li>
-                            <li>
-                                一週間の行動履歴
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!--２日-->
-                <div class="status-column">
-                    <div class="day-header">
-                        残り２日
-                    </div>
-                    <div class="task-card">
-                        <ul class="task-list">
-                            <li>
-                                線形代数学
-                            </li>
-                            <li>
-                                TOEIC
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!--３日-->
-                <div class="status-column">
-                    <div class="day-header">
-                        残り３日
-                    </div>
-                    <div class="task-card">
-                        <ul class="task-list">
-                            <li>
-                                データサイエンス
-                            </li>
-                            <li>
-                                プログラミング
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!--４日-->
-                <div class="status-column">
-                    <div class="day-header">
-                        残り４日
-                    </div>
-                    <div class="task-card">
-                        <ul class="task-list">
-                            <li>
-                                ～～～
-                            </li>
-                            <li>
-                                ～～～
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!--５日-->
-                <div class="status-column">
-                    <div class="day-header">
-                        残り５日
-                    </div>
-                    <div class="task-card">
-                        <ul class="task-list">
-                        </ul>
-                    </div>
-                </div>
-
-                <!--６日-->
-                <div class="status-column">
-                    <div class="day-header">
-                        残り６日
-                    </div>
-                    <div class="task-card">
-                        <ul class="task-list">
-                        </ul>
-                    </div>
-                </div>
-
-                <!--７日-->
-                <div class="status-column">
-                    <div class="day-header">
-                        残り７日
-                    </div>
-                    <div class="task-card">
-                        <ul class="task-list">
-                        </ul>
-                    </div>
-                </div>
+                <% end %>
             </div>
         </div>
 
