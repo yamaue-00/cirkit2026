@@ -1,0 +1,202 @@
+<%# app/views/tasks/index.html.erb %>
+
+<style>
+  body {
+    background-color: #333;
+    margin: 0;
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+  }
+
+  .form-container {
+    background-color: white;
+    width: 600px;
+    margin: 50px auto;
+    padding-bottom: 30px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .form-header {
+    background-color: #999;
+    padding: 10px 15px;
+    text-align: center;
+  }
+
+  .form-title {
+    color: #FFD700;
+    margin: 0;
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+
+  .form-body {
+    padding: 20px 30px;
+  }
+
+  .back-link-container {
+    margin-bottom: 15px;
+  }
+
+  .back-link {
+    color: #1E90FF;
+    text-decoration: none;
+    font-size: 0.9em;
+  }
+
+  .field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 25px;
+    margin-bottom: 25px;
+  }
+
+  .field-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 0.95em;
+  }
+
+  .field-label::before {
+    content: "・";
+    margin-right: 3px;
+  }
+
+  .input-field {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #DDD;
+    border: 1px solid #777;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 0.9em;
+    color: #333;
+  }
+
+  .input-field::placeholder {
+    color: #AAA;
+  }
+
+  textarea.input-field {
+    height: 80px;
+    resize: none;
+  }
+
+  .input-field-highlight {
+    border: 2px solid #1E90FF !important;
+  }
+
+  .submit-container {
+    text-align: center;
+  }
+
+  .submit-button {
+    background-color: #90EE90;
+    color: #333;
+    border: 1px solid #777;
+    border-radius: 10px;
+    padding: 8px 30px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .submit-button:hover {
+    background-color: #7CCD7C;
+  }
+
+  .page-header {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #AAA;
+    font-size: 0.9em;
+  }
+
+  .code-icon {
+    background-color: #2E8B57;
+    color: white;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-family: monospace;
+  }
+
+  /* エラーメッセージ用スタイル */
+  .alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 0.85em;
+  }
+</style>
+
+<div class="page-header">
+  <div>課題入力フォーム</div>
+  <div class="code-icon">&lt;/&gt;</div>
+</div>
+
+<div class="form-container">
+  <div class="form-header">
+    <h1 class="form-title">☆課題入力Form☆</h1>
+  </div>
+
+  <div class="form-body">
+    <div class="back-link-container">
+      <%= link_to '＜ 戻る', tasks_path, class: 'back-link' %>
+    </div>
+
+    <%# バリデーションエラーメッセージの表示エリア %>
+    <% if @task.errors.any? %>
+      <div class="alert-danger">
+        <ul>
+          <% @task.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%# @task を指定することで自動的に POST /tasks (createアクション) へ送信されます %>
+    <%= form_with model: @task, local: true do |f| %>
+      <div class="field-grid">
+        
+        <%# 科目名 (subject) %>
+        <div class="field-item">
+          <%= f.label :subject, '科目名', class: 'field-label' %>
+          <%= f.text_field :subject, class: 'input-field input-field-highlight', placeholder: '例：チャンカレ基礎' %>
+        </div>
+
+        <%# 提出期限 (deadline) - マイグレーションが t.date のため date_field が推奨です %>
+        <div class="field-item">
+          <%= f.label :deadline, '提出期限', class: 'field-label' %>
+          <%= f.date_field :deadline, class: 'input-field' %>
+        </div>
+
+        <%# 課題内容 (title) %>
+        <div class="field-item">
+          <%= f.label :title, '課題内容', class: 'field-label' %>
+          <%= f.text_area :title, class: 'input-field', placeholder: '例：メニュー考案' %>
+        </div>
+
+        <%# 詳細 (content) %>
+        <div class="field-item">
+          <%= f.label :content, '詳細', class: 'field-label' %>
+          <%= f.text_area :content, class: 'input-field', placeholder: '例：1000円くらいする' %>
+        </div>
+
+      </div>
+
+      <div class="submit-container">
+        <%= f.submit '追加する', class: 'submit-button' %>
+      </div>
+    <% end %>
+  </div>
+</div>
