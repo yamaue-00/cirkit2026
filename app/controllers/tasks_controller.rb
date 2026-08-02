@@ -31,6 +31,12 @@ class TasksController < ApplicationController
     @today_tasks = Task.where(completed: false, deadline: Date.today)
     @tomorrow_tasks = Task.where(completed: false, deadline: Date.tomorrow)
     @two_days_tasks = Task.where(completed: false, deadline: Date.today + 2)
+
+    @days_tasks = (0..7).map do |days|
+        Task.where(completed: false, deadline: Time.zone.today + days)
+    end
+
+     @task_counts_by_date = Task.where(completed: false).group(:deadline).count
   end
 
   def create
