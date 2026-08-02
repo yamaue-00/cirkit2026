@@ -237,11 +237,11 @@
             <div class="assignment-list" id="list">
                 <% @tasks.each do |task| %>
                     <%
-                    if task.deadline == Date.today
+                    if task.deadline == Time.zone.today
                         status_class = "due-today"
-                    elsif task.deadline == Date.tomorrow
+                    elsif task.deadline == Time.zone.today + 1
                         status_class = "due-tomorrow"
-                    elsif task.deadline < Date.today
+                    elsif task.deadline < Time.zone.today
                         status_class = "overdue"
                     else
                         status_class = ""
