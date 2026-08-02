@@ -477,41 +477,36 @@ td {
                     <h2>over</h2>
                     <div class="priority-text-over-text">
                         <ul>
+                        <% @overdue_tasks.each do |task| %>
                             <li>
-                                <p class="priority-text-over-list">AI基礎</p>
+                            <p class="priority-text-over-list"><%= task.subject %></p>
                             </li>
-                            <li>
-                                <p class="priority-text-over-list">プロジェクトデザイン</p>
-                            </li>
+                        <% end %>
                         </ul>
                     </div>
                 </div>
-
                 <div class="priority-text-first">
-                    <h2>First</h2>
+                <h2>First</h2>
                     <div class="priority-text-first-text">
                         <ul>
+                        <% @today_tasks.each do |task| %>
                             <li>
-                                <p class="priority-text-first-list">新聞ポートフォリオ</p>
+                            <p class="priority-text-first-list"><%= task.subject %></p>
                             </li>
-                            <li>
-                                <p class="priority-text-first-list">一週間の行動履歴</p>
-                            </li>
+                        <% end %>
                         </ul>
                     </div>
-
                 </div>
 
                 <div class="priority-text-second">
                     <h2>Second</h2>
                     <div class="priority-text-second-text">
                         <ul>
+                        <% @tomorrow_tasks.each do |task| %>
                             <li>
-                                <p class="priority-text-second-list">線形代数学</p>
+                            <p class="priority-text-second-list"><%= task.subject %></p>
                             </li>
-                            <li>
-                                <p class="priority-text-second-list">TOEIC</p>
-                            </li>
+                        <% end %>
                         </ul>
                     </div>
                 </div>
@@ -520,12 +515,11 @@ td {
                     <h2>Third</h2>
                     <div class="priority-text-third-text">
                         <ul>
+                        <% @two_days_tasks.each do |task| %>
                             <li>
-                                <p class="priority-text-third-list">データサイエンス</p>
+                            <p class="priority-text-third-list"><%= task.subject %></p>
                             </li>
-                            <li>
-                                <p class="priority-text-third-list">プログラミング</p>
-                            </li>
+                        <% end %>
                         </ul>
                     </div>
                 </div>
