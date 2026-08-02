@@ -1,39 +1,238 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Tasks</title>
-    <meta charset="utf-8">
-  </head>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>☆課題編集Form☆</title>
 
-  <body>
-    <h1>課題の一覧</h1>
-    <table>
-      <tr>
-        <th>科目名</th>
-        <th>タイトル</th>
-        <th>内容</th>
-        <th>締切日</th>
-      </tr>
+  <style>
+    body {
+        margin: 0;
+        font-family: sans-serif;
+        background-color: #FFFFFF;
+    }
 
-      <<% @tasks.each do |task| %>
-    <% 
-        if task.deadline == Date.today
-        bg_color = "red"
-        elsif task.deadline == Date.tomorrow 
-        bg_color = "yellow"
-        elsif task.deadline < Date.today
-        bg_color = "gray"
-        else
-        bg_color = ""
-        end
-    %>
-  <tr style="background-color: <%= bg_color %>;">
-    <td><%= task.subject %></td>
-    <td><%= task.title %></td>
-    <td><%= task.content %></td>
-    <td><%= task.deadline %></td>
-  </tr>
-<% end %>
-    </table>
-  </body>
+    header {
+        background-color: #E6E6E6;
+        padding: 30px 50px;
+    }
+
+    h1 {
+        color: #000DFF;
+        margin: 0;
+        font-size: 24px;
+        margin-left: 30px;
+    }
+
+    .content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 70px;
+    }
+    .modoru {
+        display: inline-block;
+        color: #4A90E2;
+        text-decoration: none;
+        margin-bottom: 24px;
+    }
+    .top-nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin-bottom: 24px;
+    }
+
+    .top-nav-row .modoru {
+        margin-bottom: 0;
+    }
+
+    h2 {
+        margin: 0;
+        font-size: 16px;
+    }
+
+    .list-header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        width: 80%;
+    }
+
+    .sort-menu {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 105%;
+    background: #E8E8EA;
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 10;
+    flex-direction: column;   /* ← 縦並びに変更 */
+    min-width: 100px;
+    }
+
+    .sort-menu.open {
+        display: flex;   /* ← block から flex に変更 */
+    }
+
+    .sort-menu a {
+        display: block;
+        padding: 8px 14px;
+        font-size: 14px;
+        text-decoration: none;
+        color: black;
+        white-space: nowrap;
+    }
+
+    .sort-menu a:hover {
+        background: #D5D5D8;
+    }
+    .sort-bar {
+    position: relative;
+    display: inline-block;
+    }
+    .assignment-list {
+        max-height: 400px;
+        overflow-y: auto;
+        margin-left: 30px;
+    }
+
+    .item-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #D9D9D9;
+        border-radius: 10px;
+        padding: 10px 16px;
+        margin-bottom: 10px;
+        width: 76%;
+    }
+
+    .item-card .item-title {
+        margin: 0;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .item-card .item-date {
+        margin: 2px 0 0;
+        font-size: 12px;
+        color: #666;
+    }
+
+    .item-card form {
+        display: inline;
+        margin-left: 12px;
+    }
+
+    .item-card button {
+        border: none;
+        background: none;
+        color: blue;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    /* 締切日に応じた色分け */
+    .item-card.due-today {
+        background-color: #FFB3B3;
+    }
+
+    .item-card.due-tomorrow {
+        background-color: #FFF3A3;
+    }
+
+    .item-card.overdue {
+        background-color: #7E57C2;
+    }
+    .right-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    }
+    .header-grid {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin-bottom: 16px;
+    }
+
+    .left-col {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .left-col .modoru {
+        margin-bottom: 24px;
+    }
+
+    .left-col h2 {
+        margin: 0;
+    }
+
+    .right-col {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 8px;
+}
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>☆課題編集Form☆</h1>
+  </header>
+  <div class="content">
+
+
+        <div class="header-grid">
+            <div class="left-col">
+                <%= link_to "＜戻る", tasks_path, class: "modoru" %>
+                <h1>課題一覧</h1>
+            </div>
+
+            <div class="right-col">
+                <%= link_to "完了済み＞", completed_tasks_path, class: "modoru" %>
+
+                <div class="sort-bar">
+                    <button class="sort-button" onclick="document.getElementById('sortMenu').classList.toggle('open')">
+                        並び替え ▽
+                    </button>
+                    <div class="sort-menu" id="sortMenu">
+                        <%= link_to "期限順", tasks_path(sort: "due"), class: "sort-option" %>
+                        <%= link_to "名前順", tasks_path(sort: "name"), class: "sort-option" %>
+                        <%= link_to "古い順", tasks_path(sort: "oldest"), class: "sort-option" %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <div class="assignment-list" id="list">
+                <% @tasks.each do |task| %>
+                    <%
+                    if task.deadline == Date.today
+                        status_class = "due-today"
+                    elsif task.deadline == Date.tomorrow
+                        status_class = "due-tomorrow"
+                    elsif task.deadline < Date.today
+                        status_class = "overdue"
+                    else
+                        status_class = ""
+                    end
+                    %>
+                    <div class="item-card <%= status_class %>">
+                    <div>
+                            <p class="item-title"><%= task.subject %>:<%= task.title %></p>
+                            <p class="item-date">締切: <%= task.deadline %></p>
+                    </div>
+                    <%= button_to "完了", task_path(task), method: :patch %>
+                    </div>
+                <% end %>
+            </div>
+ </div>
+</body>
 </html>
